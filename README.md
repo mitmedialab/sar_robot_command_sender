@@ -21,6 +21,9 @@ Optional arguments:
 - -s \{sleep,s,wakeup,w\}, --sleep \{sleep,s,wakeup,w\}  
     - tell robot to sleep or to wake up
 
+- -i \[ID\], --id \[ID\]
+    - provide a ID string to send alongside the command
+
 ## Details about arguments
 
 ### DO
@@ -46,3 +49,6 @@ or
 
 `"<smile>"`
 
+### ID
+
+Some robots require DO commands to be tagged with a unique ID string. You can provide a string containing the ID using the -i or --id flag. 

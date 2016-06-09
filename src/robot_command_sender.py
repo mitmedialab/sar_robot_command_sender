@@ -45,6 +45,8 @@ def robot_command_sender():
             help='tell robot to speak and/or do actions/behaviors')
     parser.add_argument('-s', '--sleep', choices=['sleep','s','wakeup','w'],
             type=str, dest='sleep', help='tell robot to sleep or to wake up')
+    parser.add_argument('-i', '--id', dest='id', action='append', nargs='?',
+            help='provide id string alongside a command')
  
     args = parser.parse_args()
     print(args)
@@ -68,6 +70,9 @@ def robot_command_sender():
            RobotCommand.WAKEUP
         msg.header = Header()
         msg.header.stamp = rospy.Time.now()
+        # check whether we were given an ID or not 
+        if args.id:
+            msg.id = args.id[0]
         # send message
         pub.publish(msg)
         rospy.loginfo(msg)
@@ -83,6 +88,9 @@ def robot_command_sender():
         # assume we were given the necessary properties in the right format
         # and just pass them along
         msg.properties = args.do[0]
+        # check whether we were given an ID or not 
+        if args.id:
+            msg.id = args.id[0]
         # send message
         pub.publish(msg)
         rospy.loginfo(msg)
