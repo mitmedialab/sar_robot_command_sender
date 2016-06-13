@@ -29,19 +29,20 @@ Optional arguments:
 ### DO
 
 The "DO" command tells a robot to speak and/or perform the specified actions or
-behaviors. The exact format of this command's argument is yet to be determined,
-but may be a string of the format:
+behaviors, using a string of the format:
 
 `"Hi <smile> I am a robot! <wave>"`
 
-where the string contains text that the robot should say, with embedded
-actions that the robot should do. We could add additional optional flags,
-such as whether the action should be blocking or non-blocking, or where to
-direct the behavior, next to each action, e.g.:
+The string contains text the robot should say, with embedded actions the robot
+should do.
+
+Some additional optional flags, such as whether the action should be blocking
+or non-blocking, or where to direct the behavior, may be provided next to each
+action, e.g.: 
 
 `"Hi <smile,nb,at-person> I am a robot! <wave,b>"`
 
-These arguments would not have to contain both speech and actions, e.g.:
+These arguments could contain just speech or just actions, e.g.:
 
 `"Hi I am a robot!"`
 
@@ -49,6 +50,27 @@ or
 
 `"<smile>"`
 
+For up-to-date information about the format of DO commands, see
+[sar\_robot\_command\_msgs](https://github.com/personal-robots/sar_robot_command_msgs).
+
 ### ID
 
-Some robots require DO commands to be tagged with a unique ID string. You can provide a string containing the ID using the -i or --id flag. 
+Some robots require DO commands to be tagged with a unique ID string. You can
+provide a string containing an ID using the -i or --id flag.
+
+## Version and dependency notes
+
+This program was built and tested with:
+
+- Python 2.7.6 
+- ROS Indigo
+- sar\_robot\_command\_msgs 1.0.0
+- Ubuntu 14.04 LTS (64-bit)
+
+## Bugs and issues
+
+Please report all bugs and issues on the [sar\_robot\_command\_sender github
+issues
+page](https://github.com/personal-robots/sar_robot_command_sender/issues).
+
+
