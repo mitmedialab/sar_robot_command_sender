@@ -83,10 +83,10 @@ def robot_command_sender():
         msg.command = RobotCommand.DO
         # assume we were given the necessary properties in the right
         # format and just pass them along
-        msg.properties = args.do[0]
+        msg.properties = str(args.do[0])
         # check whether we were given an ID or not 
         if args.id:
-            msg.id = args.id[0]
+            msg.id = str(args.id[0])
 
     # don't send message unless we got something to send
     else:
