@@ -78,7 +78,7 @@ def robot_command_sender():
             msg.id = args.id[0]
 
     # send robot say/do command
-    if args.do:
+    elif args.do:
         # build message
         msg.command = RobotCommand.DO
         # assume we were given the necessary properties in the right
@@ -87,6 +87,10 @@ def robot_command_sender():
         # check whether we were given an ID or not 
         if args.id:
             msg.id = args.id[0]
+
+    # don't send message unless we got something to send
+    else:
+        return
 
     # send message
     pub.publish(msg)
