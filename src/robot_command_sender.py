@@ -41,11 +41,11 @@ def robot_command_sender():
             formatter_class=argparse.RawDescriptionHelpFormatter,
             description='Send a message to a SAR robot. Must have roscore ' 
             + 'running for message to be sent.')
-    parser.add_argument('-d', '--do', dest='do', action='append', nargs='?',
+    parser.add_argument('-d', '--do', dest='do', action='append', nargs='+',
             help='tell robot to speak and/or do actions/behaviors')
     parser.add_argument('-s', '--sleep', choices=['sleep','s','wakeup','w'],
             type=str, dest='sleep', help='tell robot to sleep or to wake up')
-    parser.add_argument('-i', '--id', dest='id', action='append', nargs='?',
+    parser.add_argument('-i', '--id', dest='id', action='append', nargs='+',
             help='provide id string alongside a command')
  
     args = parser.parse_args()
@@ -60,42 +60,38 @@ def robot_command_sender():
     r = rospy.Rate(10) # spin at 10 Hz
     r.sleep() # sleep to wait for subscribers
 
+    # start building message
+    msg = RobotCommand()
+    msg.header = Header()
+    msg.header.stamp = rospy.Time.now()
+
     # send sleep or wakeup command
     if args.sleep:
         # build message
-        msg = RobotCommand()
+        print (args.sleep)
         if args.sleep == 'sleep' or args.sleep == 's':
             msg.command = RobotCommand.SLEEP 
         else:
-           RobotCommand.WAKEUP
-        msg.header = Header()
-        msg.header.stamp = rospy.Time.now()
+           msg.command = RobotCommand.WAKEUP
         # check whether we were given an ID or not 
         if args.id:
             msg.id = args.id[0]
-        # send message
-        pub.publish(msg)
-        rospy.loginfo(msg)
-        r.sleep()
 
     # send robot say/do command
     if args.do:
         # build message
-        msg = RobotCommand()
         msg.command = RobotCommand.DO
-        msg.header = Header()
-        msg.header.stamp = rospy.Time.now()
-        # assume we were given the necessary properties in the right format
-        # and just pass them along
+        # assume we were given the necessary properties in the right
+        # format and just pass them along
         msg.properties = args.do[0]
         # check whether we were given an ID or not 
         if args.id:
             msg.id = args.id[0]
-        # send message
-        pub.publish(msg)
-        rospy.loginfo(msg)
-        r.sleep()
 
+    # send message
+    pub.publish(msg)
+    rospy.loginfo(msg)
+    r.sleep()
 
         
 if __name__ == '__main__':
